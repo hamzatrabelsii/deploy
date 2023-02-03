@@ -1,0 +1,8 @@
+<iframe #reelLink width="320" height="440" [src]="reelToDisplay | safe" frameborder="0" style="padding: 50px; padding-bottom: 100px;height: 440px;"></iframe>
+<button class="btn btn-success" type="button" (click)="selectReel()"  style="position:relative;right:46%;bottom:16%;">Select</button>
+<p-badge [style.visibility]="reelSelected ? 'visible' : 'hidden'" [value]="count.toString()" size="xlarge" severity="warning" styleClass="mr-2" [style]="{'position':'relative','right':'58%','bottom':'29%'}"></p-badge>
+
+
+
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+<script async defer src='https://www.tiktok.com/embed.js'></script>
