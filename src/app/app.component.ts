@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import { google } from 'googleapis';
 import {FormControl, FormGroup} from "@angular/forms";
 import {TiktokServiceService} from "./services/tiktok-service.service";
 import axios from 'axios';
 
 import * as fs from "fs";
+import {GoogleApiService} from "./services/google-api.service";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-root',
@@ -16,8 +19,23 @@ export class AppComponent {
   allInstagramReels: string[] = [];
   selectCount : number = 0;
   tiktokForm: FormGroup;
+  private apiUrl = 'https://www.googleapis.com/upload/youtube/v3/videos';
 
-  constructor(private  tiktokServiceService: TiktokServiceService) {
+  file: File | undefined;
+  videoSelected = false;
+  loading = false;
+  isUploaded = false;
+  @ViewChild('videoFile') nativeInputFile: ElementRef | undefined;
+  @ViewChild('video') video: any;
+  url: string | undefined;
+
+
+
+  constructor(private http: HttpClient
+              , private tiktokServiceService: TiktokServiceService
+              , private readonly google : GoogleApiService
+              , private dialog: MatDialog) {
+
 
     this.tiktokForm = new FormGroup({
       'tiktokPageLink' : new FormControl(null)
@@ -52,41 +70,50 @@ export class AppComponent {
 
   }
 
+
    test(){
 
      const axios = require('axios');
      const inputElement = document.querySelector('input[type="file"]');
      // @ts-ignore
      const videoFile = inputElement.files[0];
-     uploadVideo()
-       .then(data => {
-         console.log(data);
-       })
-       .catch(error => {
-         console.error(error);
-       });
+     console.log("teeeeeees");
+     this.tiktokServiceService.uploadVideo(videoFile).subscribe(res => {
+       console.log("sucess");
+     });
 
-
-     async function uploadVideo() {
-       const formData = new FormData();
-       const accessToken = 'AIzaSyBho6W_p7YX25b_9CXWkRBFsZWWUTSFeww';
-       formData.append('file', videoFile);
-       console.log(formData);
-
-       const response = await axios.post('https://www.googleapis.com/upload/youtube/v3/videos?part=snippet,status', formData, {
-         headers: {
-           'Content-Type': 'multipart/form-data',
-           'Authorization': `Bearer ${accessToken}`
-         }
-       });
-       console.log(response);
-
-       return response.data;
      }
 
 
+  onFileSelect(event: any) {
+    const videoBlob = event.target.files[0];
+    console.log(videoBlob);
+    console.log(this.google.getAccessToken());
+    const accessToken = this.google.getAccessToken();
 
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${accessToken}`)
+      .set('Content-Type', 'application/json');
 
-   }
+    const videoFile = new File([videoBlob], videoBlob.name, {type: videoBlob.type});
+    this.google.uploadVideo(accessToken,videoFile);
+  }
+
+  selectVideo(data:any) {
+    this.videoSelected = true;
+    if (navigator.userAgent.search('firefox')) {
+      this.file = data.target.files[0];
+    } else {
+      this.file = data.srcElement.files[0];
+    }
+    // @ts-ignore
+    this.video.nativeElement.src = window.URL.createObjectURL(this.file);
+  }
+
+  pickFile() {
+    // @ts-ignore
+    this.nativeInputFile.nativeElement.click();
+  }
+
 }
 

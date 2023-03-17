@@ -20,6 +20,43 @@
       <app-reel-to-select *ngFor='let reel of allInstagramReels' [reelToDisplay]="reel" [count]="selectCount"></app-reel-to-select>
   </div>
 
+<nav class="black">
+  <div class="nav-wrapper">
+    <div class="container">
+      <a href="#!" class="brand-logo">YouTube Channel Data</a>
+    </div>
+  </div>
+</nav>
+<br>
+<section>
+  <div class="container">
+    <p>Log In With Google</p>
+    <button class="btn red" id="authorize-button">Log In</button>
+    <button class="btn red" id="signout-button">Log Out</button>
+    <br>
+    <div id="content">
+      <div class="row">
+        <div class="col s6">
+          <form id="channel-form">
+            <div class="input-field col s6">
+              <input type="text" placeholder="Enter Channel Name" id="channel-input">
+              <input type="submit" value="Get Channel Data" class="btn grey">
+            </div>
+          </form>
+        </div>
+        <div id="channel-data" class="col s6"></div>
+      </div>
+      <div class="row" id="video-container"></div>
+    </div>
+  </div>
+</section>
+<div>
+  <label for="video-file">Select a video file:</label>
+  <input type="file" id="video-file" (change)="onFileSelect($event)">
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+<script src="main.js"></script>
+<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
   <script async defer src='https://www.tiktok.com/embed.js'></script>
 
 
@@ -30,4 +67,31 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<div fxLayout="column" style="margin-top: 3%"
+     fxLayoutAlign="center center " fxLayoutGap="30px">
+  <h1>Select a video from your Computer</h1>
+  <p>(Upload your video to add it in Resume)</p>
+  <div *ngIf="!this.videoSelected" fxLayoutAlign="center center" style="margin-top: 20px" fxLayout="row">
+    <input #videoFile name="video" type="file" (change)="this.selectVideo($event)" hidden accept="video/*"/>
+    <button (click)="this.pickFile()" mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      SELECT
+    </button>
+  </div>
+  <div [hidden]="!this.videoSelected">
+    <video *ngIf="!this.isUploaded" id="video" controls #video>
+      Your Browser Does not Support it
+    </video>
+  </div>
+  <div *ngIf="this.videoSelected" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="20px">
+    <button *ngIf="!this.isUploaded" mat-raised-button color="primary" matTooltip="This will be a Private video"
+            (click)="test()">Upload to Youtube
+    </button>
+    <input type="file" #videoFile name="video" accept="video/*" (change)="selectVideo($event)" hidden>
+    <button mat-raised-button color="primary" (click)="this.pickFile()">
+      <mat-icon>cached</mat-icon>
+      <strong>CHANGE</strong></button>
+  </div>
+</div>
 
