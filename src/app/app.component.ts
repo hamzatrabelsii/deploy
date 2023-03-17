@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component } from '@angular/core';
 import { google } from 'googleapis';
 import {FormControl, FormGroup} from "@angular/forms";
 import {TiktokServiceService} from "./services/tiktok-service.service";
@@ -7,7 +7,6 @@ import axios from 'axios';
 import * as fs from "fs";
 import {GoogleApiService} from "./services/google-api.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-root',
@@ -21,20 +20,7 @@ export class AppComponent {
   tiktokForm: FormGroup;
   private apiUrl = 'https://www.googleapis.com/upload/youtube/v3/videos';
 
-  file: File | undefined;
-  videoSelected = false;
-  loading = false;
-  isUploaded = false;
-  @ViewChild('videoFile') nativeInputFile: ElementRef | undefined;
-  @ViewChild('video') video: any;
-  url: string | undefined;
-
-
-
-  constructor(private http: HttpClient
-              , private tiktokServiceService: TiktokServiceService
-              , private readonly google : GoogleApiService
-              , private dialog: MatDialog) {
+  constructor(private http: HttpClient, private tiktokServiceService: TiktokServiceService, private readonly google : GoogleApiService) {
 
 
     this.tiktokForm = new FormGroup({
@@ -97,22 +83,6 @@ export class AppComponent {
 
     const videoFile = new File([videoBlob], videoBlob.name, {type: videoBlob.type});
     this.google.uploadVideo(accessToken,videoFile);
-  }
-
-  selectVideo(data:any) {
-    this.videoSelected = true;
-    if (navigator.userAgent.search('firefox')) {
-      this.file = data.target.files[0];
-    } else {
-      this.file = data.srcElement.files[0];
-    }
-    // @ts-ignore
-    this.video.nativeElement.src = window.URL.createObjectURL(this.file);
-  }
-
-  pickFile() {
-    // @ts-ignore
-    this.nativeInputFile.nativeElement.click();
   }
 
 }
