@@ -1,0 +1,31 @@
+<div style=" display: flex; align-items: center; justify-content: center; justify-content: space-around; margin-top: 2%">
+  <form [formGroup] ="tiktokForm" (ngSubmit)="onSubmitTikTok()">
+    <input class="form-control" id="tiktokPageLink" formControlName="tiktokPageLink" aria-describedby="emailHelp" placeholder="Enter TikTok Page">
+    <div style="display: grid;">
+    <small id="tiktokHelp" class="form-text text-muted">Example: https://www.tiktok.com/@traveland.adventure?lang=en</small>
+    <button class="btn btn-primary" type="submit" style="width: 40%;margin-top: 5px">Export tiktok reels</button>
+    </div>
+
+  </form>
+  <form [formGroup] ="tiktokForm" (ngSubmit)="onSubmitTikTok()">
+    <input class="form-control" id="instagramPageLink" aria-describedby="instagramHelp" placeholder="Enter Instagram Page">
+    <div style="display: grid;">
+      <small id="instagramHelp" class="form-text text-muted">Example: https://www.instagram.com/slhlzynbmrzw/reels/</small>
+      <button class="btn btn-primary" type="submit" style="width: 55%;margin-top: 5px">Export instagram reels</button>
+    </div>
+
+  </form>
+  <button class="btn btn-primary" type="button" (click)="test()" style="margin-bottom: 4.2%;">Download selected reels</button>
+
+
+
+
+</div>
+
+<div id="container" style="display: inline-flex;flex-wrap: wrap; justify-content: space-between;">
+  <app-reel-to-select *ngFor='let reel of allInstagramReels' [reelToDisplay]="reel" [count]="selectCount"></app-reel-to-select>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+<script async defer src='https://www.tiktok.com/embed.js'></script>

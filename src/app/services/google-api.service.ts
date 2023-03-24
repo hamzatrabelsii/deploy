@@ -7,7 +7,7 @@ const oAthConfig: AuthConfig = {
   issuer: 'https://accounts.google.com',
   strictDiscoveryDocumentValidation: false,
   redirectUri: window.location.origin,
-  clientId: '266374059661-dpn2rtd1fsdnmee03g93j478t1j2ocig.apps.googleusercontent.com',
+  clientId: '266374059661-ti5g7jgv7ncafb28666u7an6fo7amk70.apps.googleusercontent.com',
   scope: 'openid profile email'
 }
 
@@ -28,7 +28,7 @@ export class GoogleApiService {
           oAthService.loadUserProfile().then( (userProfile) => {
             console.log(JSON.stringify(userProfile))
             const accessToken = this.oAthService.getAccessToken();
-            console.log('Access Token:', accessToken);
+            console.log('Access Token:', this.oAthService.getAccessToken());
             const headers = new HttpHeaders()
               .set('Authorization', `Bearer ${accessToken}`)
               .set('Content-Type', 'application/json');
@@ -67,7 +67,7 @@ export class GoogleApiService {
       .set('X-Upload-Content-Length', 3018514 + '')
       .set('X-Upload-Content-Type', 'video/*');
 
-    const url = 'https://www.googleapis.com/api/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status,contentDetails';
+    const url = 'https://www.googleapis.com/auth/youtube.upload';
 
     console.log("heeere");
     this.http.post(url, data, {headers, observe: 'response', responseType: 'text'})

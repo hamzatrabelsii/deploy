@@ -1,0 +1,28 @@
+<div fxLayout="column" style="margin-top: 3%"
+     fxLayoutAlign="center center " fxLayoutGap="30px" align="center">
+  <h1>Select a video from your Computer</h1>
+  <p>(Upload your video to add it in Resume)</p>
+  <div *ngIf="!this.videoSelected" fxLayoutAlign="center center" style="margin-top: 20px" fxLayout="row">
+    <input #videoFile name="video" type="file" (change)="this.selectVideo($event)" hidden accept="video/*"/>
+    <button (click)="this.pickFile()" mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      SELECT
+    </button>
+  </div>
+  <div [hidden]="!this.videoSelected">
+    <video *ngIf="!this.isUploaded" id="video" controls #video>
+      Your Browser Does not Support it
+    </video>
+  </div>
+  <div *ngIf="this.videoSelected" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="20px" >
+    <button *ngIf="!this.isUploaded" mat-raised-button color="primary" matTooltip="This will be a Private video"
+            (click)="youtubeSubmit()">Upload to Youtube
+    </button>
+    <input type="file" #videoFile name="video" accept="video/*" (change)="selectVideo($event)" hidden>
+    <button mat-raised-button color="primary" (click)="this.pickFile()">
+      <mat-icon>cached</mat-icon>
+      <strong>CHANGE</strong></button>
+  </div>
+</div>
+<br>
+

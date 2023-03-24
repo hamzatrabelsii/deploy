@@ -1,70 +1,15 @@
-<div style=" display: flex; align-items: center; background-color: red; justify-content: center; justify-content: space-around; margin-top: 2%">
-  <form [formGroup] ="tiktokForm" (ngSubmit)="onSubmitTikTok()">
-     <label for="tiktokPageLink">
-       Tiktok Page
-     </label>
-    <input type="text" id="tiktokPageLink" formControlName="tiktokPageLink">
-    <button class="btn btn-success" type="submit" >Show instagram reels</button>
+<mat-toolbar color="primary" class="mat-elevation-z4">
+  <mat-icon style="margin-right: 10px">cloud_upload</mat-icon>
+  <span>Social Uploader</span>
+  <a mat-button style="margin-left: 30px" routerLink="concatenate">Concatenate Videos</a>
+  <a mat-button routerLink="export">Export Reels</a>
+  <a mat-button routerLink="upload">Upload to Youtube</a>
+  <div class="spacer"> </div>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <a mat-raised-button color="accent">Logout</a>
+</mat-toolbar>
 
-  </form>
-
-<button class="btn btn-success" type="button" style="">Show tiktok reels</button>
-<button class="btn btn-success" type="button" (click)="test()" style="">Download suggested reels</button>
-  <input type="file" id="file-input" accept="video/*">
-
-
-
-</div>
-
-  <div id="container" style="display: inline-flex;flex-wrap: wrap; justify-content: space-between;">
-      <app-reel-to-select *ngFor='let reel of allInstagramReels' [reelToDisplay]="reel" [count]="selectCount"></app-reel-to-select>
-  </div>
-
-<nav class="black">
-  <div class="nav-wrapper">
-    <div class="container">
-      <a href="#!" class="brand-logo">YouTube Channel Data</a>
-    </div>
-  </div>
-</nav>
-<br>
-<section>
-  <div class="container">
-    <p>Log In With Google</p>
-    <button class="btn red" id="authorize-button">Log In</button>
-    <button class="btn red" id="signout-button">Log Out</button>
-    <br>
-    <div id="content">
-      <div class="row">
-        <div class="col s6">
-          <form id="channel-form">
-            <div class="input-field col s6">
-              <input type="text" placeholder="Enter Channel Name" id="channel-input">
-              <input type="submit" value="Get Channel Data" class="btn grey">
-            </div>
-          </form>
-        </div>
-        <div id="channel-data" class="col s6"></div>
-      </div>
-      <div class="row" id="video-container"></div>
-    </div>
-  </div>
-</section>
-<div>
-  <label for="video-file">Select a video file:</label>
-  <input type="file" id="video-file" (change)="onFileSelect($event)">
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-<script src="main.js"></script>
-<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
-  <script async defer src='https://www.tiktok.com/embed.js'></script>
-
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<router-outlet></router-outlet>
 
